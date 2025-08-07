@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preferences Study</title>
+  <link rel="icon" type="image/png" href="img/thumbnail.png" />
+  <script src="https://unpkg.com/jspsych@7.3.1"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.2"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.1.2"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response@1.1.2"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-image-button-response@1.2.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-survey-multi-choice@1.1.2"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-survey-multi-select@1.1.3"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-survey-text@1.1.2"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-preload@1.1.2"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-fullscreen@1.1.2"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-html-slider-response@1.1.3"></script>
+  <link href="https://unpkg.com/jspsych@7.3.1/css/jspsych.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="css/psstyle.css" />
+  <style></style>
+</head>
+<body>
+    <script>
+    /* initialize jsPsych and enter redirect URL */
+    var jsPsych = initJsPsych({
+      experiment_width: 1000,
+      override_safe_mode: true,
+      on_finish: function () {
+        jsPsych.data.displayData('csv');
+        //  window.location = "https://app.prolific.com/submissions/complete?cc=CR62J4QU"
+      },
+    });
+
+    /* capture info from Prolific */
+    var subject_id = jsPsych.data.getURLVariable("PROLIFIC_PID"); //Modify if use a different platform
+    jsPsych.data.addProperties({
+      subject_id: subject_id,
+    });
+    /* IF WE WANT TO MAKE subject ID */
+    var subj_code; // a variable that later stores a random subject code
+
+    function makeid(length) {
+      var result = "";
+      var characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      var charactersLength = characters.length;
+      for (var i = 0; i < length; i++) {
+        result += characters.charAt(
+          Math.floor(Math.random() * charactersLength)
+        );
+      }
+      return result;
+    } // this function creates a random subject code using the characters listed above
+
+    subj_code = makeid(12); // generate the actual code (12 strings)
+
+    jsPsych.data.addProperties({
+      pid: subj_code,
+      PROLIFIC_PID: subject_id,
+    });
+
+    /* create timeline */
+    var timeline = [];
+
+    /* define instructions */
+    var welcome = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: `
+         <h1>Bienvenido a este estudio</h1>
+         <body>
+          <p>En este experimento observará diferentes opciones de entre las que deberá elegir su favorita.</p>
+          <p>Por favor, comience el estudio solo cuando se encuentre en un entorno tranquilo. No debe haber distracciones y no debe ser interrumpido durante los próximos <b>5 minutos</b>.</p>
+          <p>Apague cualquier música o televisión que puedan distraerle.</p>
+          <p><b><span style="color:#980000;">Importante</span></b>: Este experimento puede dar errores en el navegador Safari</b>. Si está usando Safari, cambie de navegador antes de continuar.</p>
+          <div id="button-container" style="text-align: center; height: 60px; margin-top: 20px;">
+                <!-- Button will be dynamically added here -->
+          </div>
+        </body>
+        `,
+      choices: [], // No choices at the start
+      on_load: function () {
+        // Create the button element
+        var button = document.createElement("button");
+        button.innerHTML = "Continuar";
+        button.className = "jspsych-btn";
+        button.style.display = "none";
+        button.style.padding = "40px 25px";
+
+        // Append the button to the container
+        var container = document.getElementById("button-container");
+        container.appendChild(button);
+
+        // Show the button after 10 seconds
+        setTimeout(() => {
+          button.style.display = "inline-block";
+        }, 3000);
+
+        // Add event listener to the button
+        button.addEventListener("click", () => {
+          jsPsych.finishTrial(); // Move to the next trial
+        });
+      },
+    };
+
+    timeline.push(welcome);
+
+    var instructions = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: `
+        <h1>Instrucciones</h1>
+        <body>
+        <p>A continuación va a observar varios escenarios en los que deberá elegir su opción favorita.</p>
+        <p>En cada escenario, tendrá disponibles dos viñetas que representan dos opciones de vivienda diferente con características distintas.
+        Para cada opción, deberá elegir la que prefiera.</p>
+        <div id="button-container" style="text-align: center; height: 60px; margin-top: 20px;">
+                <!-- Button will be dynamically added here -->
+        </div>
+        </body>
+        `,
+      choices: [], // No choices at the start
+      on_load: function () {
+        // Create the button element
+        var button = document.createElement("button");
+        button.innerHTML = "Entiendo las instrucciones y estoy listo para comenzar";
+        button.className = "jspsych-btn";
+        button.style.display = "none";
+        button.style.padding = "40px 25px";
+
+        // Append the button to the container
+        var container = document.getElementById("button-container");
+        container.appendChild(button);
+
+        // Show the button after 10 seconds
+        setTimeout(() => {
+          button.style.display = "inline-block";
+        }, 3000);
+
+        // Add event listener to the button
+        button.addEventListener("click", () => {
+          jsPsych.finishTrial(); // Move to the next trial
+        });
+      },};
+
+    timeline.push(instructions);
+
+    /* define fixation cross to show between trials - for practice trials and main task */
+    var fixation = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <div class="loader"></div></div>`,
+      choices: "NO_KEYS",
+      trial_duration: function () {
+        return jsPsych.randomization.sampleWithReplacement(
+          [750, 1000, 1250],
+          1,
+        )[0];
+      },
+      data: {
+        task: "fixation",
+      },
+    };
+
+    // Create first vignette
+    var photoList = [
+      "img/photos/LSH1.png",
+      "img/photos/LSH2.png",
+      "img/photos/LSH3.png",
+      "img/photos/LSP1.png",
+      "img/photos/LSP2.png",
+      "img/photos/LSP3.png"
+    ];
+
+    var photos = jsPsych.randomization.sampleWithoutReplacement(photoList, 2);
+    var leftPhoto = photos[0];
+    var rightPhoto = photos[1];
+    console.log("Left", leftPhoto, "Right", rightPhoto);
+
+    var vignette = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: `
+      <h1>
+        <b>¿En qué lugar te gustaría vivir?</b>
+      </h1><br>
+      <div style="display: flex; justify-content: space-around; gap: 40px;" class="center-flex;" style="max-width: 95vw;">
+      <!-- Card 1 -->
+      <div style="border: 1px solid #ccc; border-radius: 10px; padding: 20px; width: 40%; background: #fff; flex-direction: column;">
+        <img class="spaced-img" src="${leftPhoto}" style="border-radius: 10px;" />
+        <br>
+        <div style="margin-bottom: 15px;">
+          <button class="jspsych-btn" style = "border: 0px; background: #ffffff; padding: 4px 4px 1px 4px;" 
+          onclick="jsPsych.finishTrial({choice: 'left'})"><img src='img/choice.png' height='120'></button>
+          </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div style="border: 1px solid #ccc; border-radius: 10px; padding: 20px; width: 40%; background: #fff; flex-direction: column;">
+        <img class="spaced-img" src="${rightPhoto}" style="border-radius: 10px;" />
+        <br>
+        <div style="margin-bottom: 15px;">
+          <button class="jspsych-btn" style = "border: 0px; background: #ffffff; padding: 4px 4px 1px 4px;" 
+          onclick="jsPsych.finishTrial({choice: 'right'})"><img src='img/choice.png' height='120'></button>
+          </div>
+      </div>
+    </div> `,
+      choices: [],
+      data: {
+        task: "trial",
+        leftPhoto: leftPhoto,
+        rightPhoto: rightPhoto,
+      },
+    }
+
+    timeline.push(vignette);
+
+    jsPsych.run(timeline);
+
+    </script>
+</body>
+</html>
