@@ -1,0 +1,242 @@
+#jspsych-survey-text-next {
+  font-size: 24px;
+  font-weight: bold;
+  font-family: "Helvetica", "Arial", sans-serif;
+  height: 40px;
+  width: 120px;
+  padding: 4px 4px 4px 4px;
+}
+
+/* Style for the question title */
+.jspsych-survey-multi-choice-question p {
+  font-size: 22px;
+  font-weight: bold;
+  /* Bold only for the title */
+  color: #000000;
+  font-family: "Helvetica", "Arial", sans-serif;
+  margin-bottom: 10px;
+}
+
+/* Style for the options (radio buttons) */
+.jspsych-survey-multi-choice-option label {
+  font-size: 22px;
+  /* Slightly smaller and not bold */
+  font-weight: normal;
+  color: #000000;
+  font-family: "Helvetica", "Arial", sans-serif;
+}
+
+.jspsych-display-element input[type="text"] {
+  font-family: "Helvetica", "Arial", sans-serif;
+  font-size: 25px;
+  height: 40px;
+  width: 300px;
+}
+
+.jspsych-btn:hover {
+  background-color: rgb(232, 230, 237);
+  font-size: 22px;
+  max-width: 90vw;
+  font-family: "Helvetica", "Arial", sans-serif;
+  font-weight: bold;
+  text-align: center;
+  /* Center-align title */
+  color: #000000;
+  font-weight: 600;
+  border: 0px;
+}
+
+.jspsych-btn {
+  font-size: 22px;
+  max-width: 90vw;
+  font-family: "Helvetica", "Arial", sans-serif;
+  font-weight: bold;
+  text-align: center;
+  /* Center-align title */
+  color: #000000;
+  font-weight: 600;
+  border: 0px;
+  padding: auto;
+  background-color: #1356551e;
+}
+
+#jspsych-survey-multi-choice-next {
+  font-size: 25px;
+  font-family: "Helvetica", "Arial", sans-serif;
+  font-weight: bold;
+  text-align: center;
+  /* Center-align title */
+  color: #000000;
+  font-weight: 600;
+  border: 0px;
+  padding: 15px 25px;
+  background-color: #1356552a;
+}
+
+.jspsych-content {
+  max-width: 90%;
+}
+
+body {
+  padding: auto;
+  margin: auto;
+  background-color: #caddd4;
+  font-family: "Helvetica", "Arial", sans-serif !important;
+  font-size: 24px;
+  line-height: 1.6;
+  color: #333;
+  /* Default text color */
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  display: grid;
+  border-radius: 50%;
+  background:
+    linear-gradient(0deg, rgb(0 0 0/50%) 30%, #0000 0 70%, rgb(0 0 0/100%) 0) 50%/8% 100%,
+    linear-gradient(90deg, rgb(0 0 0/25%) 30%, #0000 0 70%, rgb(0 0 0/75%) 0) 50%/100% 8%;
+  background-repeat: no-repeat;
+  animation: l23 1s infinite steps(12);
+}
+
+.loader::before,
+.loader::after {
+  content: "";
+  grid-area: 1/1;
+  border-radius: 50%;
+  background: inherit;
+  opacity: 0.915;
+  transform: rotate(30deg);
+}
+
+.loader::after {
+  opacity: 0.83;
+  transform: rotate(60deg);
+}
+
+@keyframes l23 {
+  100% {
+    transform: rotate(1turn)
+  }
+}
+
+#jspsych-survey-multi-choice-response {
+  font-size: 20px;
+  font-weight: bold;
+  color: #000000;
+  font-weight: 200;
+  /* Slightly less bold than the title */
+  margin: 15px 0;
+  font-family: "Helvetica", "Arial", sans-serif;
+  height: 40px;
+  width: 120px;
+  padding: 0px 4px 4px 4px;
+}
+
+@keyframes l5 {
+  0% {
+    box-shadow:
+      30px 0 #000,
+      -30px 0 #0002;
+    background: #000;
+  }
+
+  33% {
+    box-shadow:
+      30px 0 #000,
+      -30px 0 #0002;
+    background: #0002;
+  }
+
+  66% {
+    box-shadow:
+      30px 0 #0002,
+      -30px 0 #000;
+    background: #0002;
+  }
+
+  100% {
+    box-shadow:
+      30px 0 #0002,
+      -30px 0 #000;
+    background: #000;
+  }
+}
+
+h1 {
+  font-size: 32px;
+  /* Adjust size for main title */
+  font-weight: bold;
+  text-align: center;
+  /* Center-align title */
+  color: #135655;
+  /* Title color */
+  margin: 20px 0;
+}
+
+h2 {
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  /* Center-align title */
+  color: #000000;
+  font-weight: 600;
+  /* Slightly less bold than the title */
+  color: #34495e;
+  margin: 15px 0;
+}
+
+p {
+  font-size: 18px;
+  color: #000000;
+  font-weight: 500;
+  /* Slightly less bold than the title */
+  margin: 15px 0;
+  font-family: "Helvetica", "Arial", sans-serif;
+}
+
+.center-flex {
+  display: flex;
+  /* Use flexbox for alignment */
+  justify-content: center;
+  /* Center horizontally */
+  gap: 50px;
+  /* Add a gap between the image and text containers */
+}
+
+.spaced-img {
+  margin: auto;
+  /* Optional: Adjust margin around images */
+  width: 50%;
+  max-width: 40vw;
+}
+
+.spaced-text {
+  margin: auto;
+  /* Optional: Adjust margin around images */
+  width: 50%;
+  width: 50%;
+  max-width: 40vw;
+}
+
+.img-container {
+  width: 100%;
+  /* Make the image container narrower */
+}
+
+.statement-container {
+  width: 90%;
+  /* Make the statement container wider */
+  text-align: center;
+  /* Align text to the left */
+  font-size: 22px;
+  font-family: "Helvetica", "Arial", sans-serif;
+}
+
+.jspsych-html-button-response-btngroup {
+  display: flex;
+  justify-content: space-around;
+  gap: 40px;
+}
