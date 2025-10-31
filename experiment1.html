@@ -87,8 +87,11 @@
 timeline.push(device_check);
 
     var imagePaths = ["img/choice.png", "img/thumbnail.png", "img/SiO.png", 
-    "img/photos/LSHsat.png", "img/photos/LSPsat.png"];
-    //imagePaths = imagePaths.concat(configuration.map(config => config.img));
+    "img/photos/LSHsat.png", "img/photos/LSPsat.png",
+    "img/photos/structure1.png", "img/photos/structure2.png", "img/photos/structure3.png", "img/photos/structure4.png", "img/photos/structure5.png",
+    "img/photos/pruning1.png", "img/photos/pruning2.png", "img/photos/pruning3.png",
+    "img/photos/LSH1.png", "img/photos/LSH2.png", "img/photos/LSH3.png", "img/photos/LSH4.png", "img/photos/LSH5.png",
+    "img/photos/LSP1.png", "img/photos/LSP2.png", "img/photos/LSP3.png", "img/photos/LSP4.png", "img/photos/LSP5.png"];
 
 var preload = {
       type: jsPsychPreload,
@@ -96,16 +99,15 @@ var preload = {
     };
 timeline.push(preload);
 
-    /* define instructions */
 var welcome = {
       type: jsPsychHtmlButtonResponse,
       stimulus: `
          <h1>Bienvenido a este estudio</h1>
          <body>
-          <p>En este experimento observará diferentes opciones de entre las que deberá elegir su favorita.</p>
-          <p>Por favor, comience el estudio solo cuando se encuentre en un entorno tranquilo. No debe haber distracciones y no debe ser interrumpido durante los próximos <b>5 minutos</b>.</p>
-          <p>Apague cualquier música o televisión que puedan distraerle.</p>
-          <p><b><span style="color:#980000;">Importante</span></b>: Este estudio puede dar errores en el navegador Safari</b>. Si está usando Safari, cambie de navegador antes de continuar.</p>
+          <p>En este experimento observarás diferentes opciones de entre las que deberás elegir tu favorita.</p>
+          <p>Por favor, comience el estudio solo cuando te encuentres en un entorno tranquilo. No debe haber distracciones y no debe ser interrumpido durante los próximos <b>5 minutos</b>.</p>
+          <p>Apague cualquier música o televisión que puedan distraerte.</p>
+          <p><b><span style="color:#980000;">Importante</span></b>: Este estudio puede dar errores en el navegador Safari</b>. Si estás usando Safari, cambia de navegador antes de continuar.</p>
           <div id="button-container" style="text-align: center; height: 60px; margin-top: 20px;">
                 <!-- Button will be dynamically added here -->
           </div>
@@ -135,52 +137,13 @@ var welcome = {
         });
       },
     };
-//timeline.push(welcome);
-
-var instructions = {
-      type: jsPsychHtmlButtonResponse,
-      stimulus: `
-        <h1>Instrucciones</h1>
-        <body>
-        <p>A continuación va a observar varios escenarios en los que deberá elegir su opción favorita de entre dos posibles.</p>
-        <p>En cada escenario, tendrá disponibles dos viñetas que representan dos opciones de vivienda diferente con características distintas.
-        Para cada opción, deberá elegir la que prefiera haciendo clic en el botón inferior a dicha opción.</p>
-        <div id="button-container" style="text-align: center; height: 60px; margin-top: 20px;">
-                <!-- Button will be dynamically added here -->
-        </div>
-        </body>
-        `,
-      choices: [], // No choices at the start
-      on_load: function () {
-        // Create the button element
-        var button = document.createElement("button");
-        button.innerHTML = "Entiendo las instrucciones y estoy listo para comenzar";
-        button.className = "jspsych-btn";
-        button.style.display = "none";
-        button.style.padding = "40px 25px";
-
-        // Append the button to the container
-        var container = document.getElementById("button-container");
-        container.appendChild(button);
-
-        // Show the button after 10 seconds
-        setTimeout(() => {
-          button.style.display = "inline-block";
-        }, 3000);
-
-        // Add event listener to the button
-        button.addEventListener("click", () => {
-          jsPsych.finishTrial(); // Move to the next trial
-        });
-      },
-    };
- //timeline.push(instructions);
+timeline.push(welcome);
 
 /*Secciones del cuestionario:
 1. Conexión con la naturaleza "Self-in-Other" [DONE]
 2. Preferencias con el barrio [DONE]
-3. Choice experiment
-4. Demographics
+3. Choice experiment [DONE]
+4. Demographics [DONE]
 */
 
 // Sección 1: Conexión con la naturaleza "Self-in-Other"
@@ -189,8 +152,8 @@ var section1_1 = {
   stimulus: `
     <p>En la imagen de debajo puedes ver una representación de diferentes maneras de sentirse conectado/a con la naturaleza.</p> 
     <p>Si A representa la opción menos conectada con la naturaleza y G la opción más conectada, ¿dónde te situarías tú?</p>
-    <div id="img-container" style="text-align: center; height: 60px; margin-top: 20px; margin-bottom:200px;">
-        <img src="img/SiO.png" alt="Connection with nature" style="max-width:100%; height:auto;">
+    <div id="img-container" style="text-align: center; height: 60px; margin-top: 20px; margin-bottom:300px;">
+        <img src="img/SiO.png" alt="Connection with nature" style="max-height:300px;">
     </div>
     `,
   choices: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
@@ -203,13 +166,14 @@ var section1_1 = {
     });
   },
 };
-//timeline.push(section1_1);
+timeline.push(section1_1);
 
 var section1_2 = {
   type: jsPsychHtmlSliderResponse,
   stimulus: `
-    <p>Ahora, utiliza el siguiente botón deslizante para indicar cómo de importante es para ti estar en contacto con la naturaleza en tu vida diaria.</p>
+    <p>Ahora, utiliza el siguiente botón deslizante para indicar <strong>cómo de importante es para ti estar en contacto con la naturaleza en tu vida diaria.</strong></p>
     `,
+  button_label: "Siguiente",
   require_movement: true,
   labels: ['Nada importante', 'Poco importante', 'Bastante importante', 'Muy importante'],
   on_finish: function (data) {
@@ -219,19 +183,19 @@ var section1_2 = {
     });
   },
 };
-//timeline.push(section1_2);
+timeline.push(section1_2);
 
 // Sección 2: Preferencias con el barrio
 var instructions_section2 = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `
     <h2>Preferencias sobre el barrio</h2>
-    <p>A continuación, encontrará una serie de afirmaciones relacionadas con las características que valora en un barrio o zona para vivir.</p>
-    <p>Por favor, indique su grado de acuerdo o desacuerdo con cada una de las siguientes afirmaciones utilizando la escala proporcionada.</p>
+    <p>A continuación, encontrarás una serie de afirmaciones relacionadas con las características que valoras en un barrio o zona para vivir.</p>
+    <p>Por favor, indica tu grado de acuerdo o desacuerdo con cada una de las siguientes afirmaciones utilizando la escala proporcionada.</p>
     `,
   choices: ['Comenzar'],
 };
-//timeline.push(instructions_section2);
+timeline.push(instructions_section2);
 
 var labels = [
     "Nada importante",
@@ -289,7 +253,7 @@ var section2_1 = {
   },
   button_label: "Siguiente",
 };
-//timeline.push(section2_1);
+timeline.push(section2_1);
 
 var section2_2 = {
   type: jsPsychSurveyMultiChoice,
@@ -301,6 +265,7 @@ var section2_2 = {
       required: true,
     },
   ],
+  button_label: "Siguiente",
   on_finish: function (data) {
     jsPsych.data.addProperties({
       biodiversity_belief: data.response.biodiversity_belief,
@@ -308,7 +273,7 @@ var section2_2 = {
     //console.log(jsPsych.data.get().last(1).select('biodiversity_belief').values[0]);
   },
 };
-//timeline.push(section2_2);
+timeline.push(section2_2);
 
 var section2_2feedback = {
     type: jsPsychHtmlButtonResponse,
@@ -322,19 +287,19 @@ var section2_2feedback = {
           return d.response && d.response.biodiversity_belief !== undefined;
         });
       var answer = respEntry ? respEntry.response.biodiversity_belief : null;
-      var message = "<h2>Sobre su respuesta</h2>";
+      var message = "<h2>Sobre tu respuesta</h2>";
       if (answer === "Sí") {
         message +=
-          "<p>Ha indicado que <strong>SÍ</strong> cree que el tipo de vegetación o su manejo tengan un efecto sobre la biodiversidad. <br>Según estudios recientes, en efecto se ha observado que la biodiversidad aumenta en áreas con mayor cantidad de árboles combinados con arbustos y hierba, y cuanto menos se pode la cobertura herbácea.</p>";
+          "<p>Has indicado que <strong>SÍ</strong> crees que el tipo de vegetación o su manejo tengan un efecto sobre la biodiversidad. <br>Según estudios recientes, en efecto se ha observado que la biodiversidad aumenta en áreas con mayor cantidad de árboles combinados con arbustos y hierba, y cuanto menos se pode la cobertura herbácea.</p>";
       } else if (answer === "No") {
         message +=
-          "<p>Ha indicado que <strong>NO</strong> cree que el tipo de vegetación o su manejo tengan un efecto sobre la biodiversidad. <br>Según estudios recientes, sí se ha observado que la biodiversidad aumenta en áreas con mayor cantidad de árboles combinados con arbustos y hierba, y cuanto menos se pode la cobertura herbácea.</p>";
+          "<p>Has indicado que <strong>NO</strong> crees que el tipo de vegetación o su manejo tengan un efecto sobre la biodiversidad. <br>Según estudios recientes, sí se ha observado que la biodiversidad aumenta en áreas con mayor cantidad de árboles combinados con arbustos y hierba, y cuanto menos se pode la cobertura herbácea.</p>";
       } else if (answer === "No estoy seguro/a") {
         message +=
-          "<p>Ha indicado que <strong>no está seguro/a</strong> de si el tipo de vegetación o su manejo tengan un efecto sobre la biodiversidad. <br>Según estudios recientes, sí se ha observado que la biodiversidad aumenta en áreas con mayor cantidad de árboles combinados con arbustos y hierba, y cuanto menos se pode la cobertura herbácea.</p>";
+          "<p>Has indicado que <strong>no estás seguro/a</strong> de si el tipo de vegetación o su manejo tengan un efecto sobre la biodiversidad. <br>Según estudios recientes, sí se ha observado que la biodiversidad aumenta en áreas con mayor cantidad de árboles combinados con arbustos y hierba, y cuanto menos se pode la cobertura herbácea.</p>";
       } else {
         message +=
-          "<p>No se ha detectado su respuesta. <br>Según estudios recientes, sí se ha observado que la biodiversidad aumenta en áreas con mayor cantidad de árboles combinados con arbustos y hierba, y cuanto menos se pode la cobertura herbácea.</p>";
+          "<p>No se ha detectado tu respuesta. <br>Según estudios recientes, sí se ha observado que la biodiversidad aumenta en áreas con mayor cantidad de árboles combinados con arbustos y hierba, y cuanto menos se pode la cobertura herbácea.</p>";
       }
       return message;
     },
@@ -361,7 +326,7 @@ var section2_2feedback = {
       data.biodiversity_belief = respEntry ? respEntry.response.biodiversity_belief : null;
     },
   };
-//timeline.push(section2_2feedback);
+timeline.push(section2_2feedback);
 
 var section2_3 = {
   type: jsPsychSurveyLikert,
@@ -391,7 +356,7 @@ var section2_3 = {
   },
   button_label: "Siguiente",
 };
-//timeline.push(section2_3);
+timeline.push(section2_3);
 
 // Sección 3: Choice experiment
 var section3_1 = {
@@ -425,7 +390,46 @@ var section3_1 = {
   `,
   choices: [],
 };
-//timeline.push(section3_1);
+timeline.push(section3_1);
+
+var instructions_section3 = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: `
+        <h1>Instrucciones</h1>
+        <body>
+        <p>A continuación vas a observar varios escenarios en los que deberás elegir tu opción favorita de entre dos posibles.</p>
+        <p>En cada escenario, tendrás disponibles dos viñetas que representan dos opciones de vivienda diferente con características distintas.
+        Para cada opción, deberás elegir la que prefieras haciendo clic en el botón inferior a dicha opción.</p>
+        <div id="button-container" style="text-align: center; height: 60px; margin-top: 20px;">
+                <!-- Button will be dynamically added here -->
+        </div>
+        </body>
+        `,
+      choices: [], // No choices at the start
+      on_load: function () {
+        // Create the button element
+        var button = document.createElement("button");
+        button.innerHTML = "Entiendo las instrucciones y estoy listo para comenzar";
+        button.className = "jspsych-btn";
+        button.style.display = "none";
+        button.style.padding = "40px 25px";
+
+        // Append the button to the container
+        var container = document.getElementById("button-container");
+        container.appendChild(button);
+
+        // Show the button after 10 seconds
+        setTimeout(() => {
+          button.style.display = "inline-block";
+        }, 3000);
+
+        // Add event listener to the button
+        button.addEventListener("click", () => {
+          jsPsych.finishTrial(); // Move to the next trial
+        });
+      },
+    };
+timeline.push(instructions_section3);
 
 /* define fixation cross to show between trials - for practice trials and main task */
 var fixation = {
@@ -443,28 +447,59 @@ var fixation = {
         task: "fixation",
       },
     };
-console.log(combinations);
+
 var loop_trial = {
       type: jsPsychHtmlButtonResponse,
       stimulus: function () {
         const start_time = performance.now();
         var left = jsPsych.randomization.sampleWithReplacement(combinations, 1)[0];
-        var left_imgConfig = left.imgConfig;
         var left_imgStr = left.imgStr;
         var left_imgPrune = left.imgPrune;
         var right = left.config === 'LSP' ? jsPsych.randomization.sampleWithReplacement(combinationsLSH, 1)[0] : jsPsych.randomization.sampleWithReplacement(combinationsLSP, 1)[0];
-        var right_imgConfig = right.imgConfig;
         var right_imgStr = right.imgStr;
         var right_imgPrune = right.imgPrune;
-        console.log(left, right);
-        var left_configuration = left.config === 'LSP' ? 'Dispersas' : 'Concentradas';
-        var right_configuration = right.config === 'LSP' ? 'Dispersas' : 'Concentradas';
+        var left_configuration = left.config === 'LSP' ? 'Concentradas' : 'Dispersas';
+        var right_configuration = right.config === 'LSP' ? 'Concentradas' : 'Dispersas';
         var left_structure = left.structure;
         var right_structure = right.structure;
         var left_pruning = left.pruning;
         var right_pruning = right.pruning;
         var left_time = left.time;
         var right_time = right.time;
+        var left_imgConfig = left.config === 'LSP' ? (
+          left_time === "Enfrente de casa" ? "img/photos/LSP1.png" : (
+            left_time === "Menos de 5 minutos" ? "img/photos/LSP2.png" : (
+              left_time === "De 5 a 10 minutos" ? "img/photos/LSP3.png" : (
+                left_time === "De 10 a 20 minutos" ? "img/photos/LSP4.png" : "img/photos/LSP5.png"
+              )
+            )
+          )
+        ) : (
+          left_time === "Enfrente de casa" ? "img/photos/LSH1.png" : (
+            left_time === "Menos de 5 minutos" ? "img/photos/LSH2.png" : (
+              left_time === "De 5 a 10 minutos" ? "img/photos/LSH3.png" : (
+                left_time === "De 10 a 20 minutos" ? "img/photos/LSH4.png" : "img/photos/LSH5.png"
+              )
+            )
+          )
+        );
+        var right_imgConfig = right.config === 'LSP' ? (
+          right_time === "Enfrente de casa" ? "img/photos/LSP1.png" : (
+            right_time === "Menos de 5 minutos" ? "img/photos/LSP2.png" : (
+              right_time === "De 5 a 10 minutos" ? "img/photos/LSP3.png" : (
+                right_time === "De 10 a 20 minutos" ? "img/photos/LSP4.png" : "img/photos/LSP5.png"
+              )
+            )
+          )
+        ) : (
+          right_time === "Enfrente de casa" ? "img/photos/LSH1.png" : (
+            right_time === "Menos de 5 minutos" ? "img/photos/LSH2.png" : (
+              right_time === "De 5 a 10 minutos" ? "img/photos/LSH3.png" : (
+                right_time === "De 10 a 20 minutos" ? "img/photos/LSH4.png" : "img/photos/LSH5.png"
+              )
+            )
+          )
+        );
         var minMultiple = 400 / 25, maxMultiple = 800 / 25;
         var left_rent = (Math.floor(Math.random() * (maxMultiple - minMultiple + 1)) + minMultiple) * 25;
         var right_rent = (Math.floor(Math.random() * (maxMultiple - minMultiple + 1)) + minMultiple) * 25;
@@ -592,16 +627,42 @@ var loop_trial = {
 var trials_block = {
     timeline: [fixation, loop_trial],
     randomize_order: true,
-    repetitions: 3,
+    repetitions: 6,
   };
 timeline.push(trials_block);
 
-    // Demographics
+// Sección 4: Demographics
+var marital_status = {
+      type: jsPsychSurveyMultiChoice,
+      questions: [
+        {
+          prompt: "¿Cuál es tu estado civil?",
+          name: "marital_status",
+          options: [
+            "Soltero/a",
+            "Casado/a",
+            "Pareja de hecho o relación estable no matrimonial",
+            "Divorciado/a o separado/a",
+            "Viudo/a",
+            "Prefiero no responder",
+          ],
+          required: true,
+          horizontal: false,
+        },
+      ],
+      on_finish: function (data) {
+        jsPsych.data.addProperties({
+          marital_status: data.response.marital_status,
+        });
+      },
+    };
+timeline.push(marital_status);
+
 var age_trial = {
       type: jsPsychSurveyText,
       questions: [
         {
-          prompt: "Por favor, indique su edad.",
+          prompt: "Por favor, indica tu edad.",
           name: "age",
           required: true,
           input_html: '<input type="number" id="age-input" required>',
@@ -630,7 +691,6 @@ var age_trial = {
         }
       },
     };
-
     // Loop to keep asking for valid age
 var age_loop = {
       timeline: [age_trial],
@@ -646,13 +706,13 @@ var age_loop = {
       },
     };
     // Add the age loop to the timeline
-//timeline.push(age_loop);
+timeline.push(age_loop);
 
 const gender = {
       type: jsPsychSurveyMultiChoice,
       questions: [
         {
-          prompt: "Indique su género.",
+          prompt: "Indica tu género.",
           name: "gender",
           options: [
             "Mujer",
@@ -671,13 +731,100 @@ const gender = {
         });
       },
     };
-//timeline.push(gender);
+timeline.push(gender);
+
+var dwelling_type = {
+      type: jsPsychSurveyMultiChoice,
+      questions: [
+        {
+          prompt: "¿Cuál es el tipo de vivienda en la que resides actualmente?",
+          name: "dwelling",
+          options: [
+            "Casa unifamiliar no adosada",
+            "Casa unifamiliar adosada",
+            "Apartamento o piso",
+            "Ático",
+            "Dúplex o loft",
+            "Estudio",
+            "Otro",
+          ],
+          required: true,
+          horizontal: false,
+        },
+        {
+          prompt: "¿La vivienda en la que reside es de su propiedad o está alquilada?",
+          name: "ownership",
+          options: [
+            "Propia",
+            "Alquilada",
+        ],
+          required: true,
+          horizontal: false,
+        },
+        {
+          prompt: "Aproximadamente, ¿cómo es el municipio donde reside?",
+          name: "tamuni",
+          options: [
+            "Zona urbana (más de 50.000 habitantes)",
+            "Zona suburbana (entre 10.000 y 50.000 habitantes)",
+            "Zona rural (menos de 10.000 habitantes)",
+          ],
+        },
+      ],
+      on_finish: function (data) {
+        // Add the dwelling response to the global data object as a new column
+        jsPsych.data.addProperties({
+          dwelling: data.response.dwelling,
+        });
+      },
+    };
+timeline.push(dwelling_type);
+
+var household = {
+      type: jsPsychSurveyMultiChoice,
+      questions: [
+        {
+          prompt: "¿Cuántas personas <strong>mayores de 14 años</strong> componen tu unidad familiar (incluyéndote a ti, excluyendo compañeros/as de piso y otros convivientes no emparentados)?",
+          name: "adults",
+          options: [
+            "Vivo solo/a",
+            "2 personas",
+            "3 personas",
+            "4 personas",
+            "5 o más personas",
+          ],
+          required: true,
+          horizontal: false,
+        },
+        {
+          prompt: "¿Cuántas personas <strong>de 14 años o menos</strong> viven en tu unidad familiar?",
+          name: "children",
+          options: [
+            "Ninguna",
+            "1 niño/a",
+            "2 niños/as",
+            "3 niños/as",
+            "4 o más niños/as",
+          ],
+          required: true,
+          horizontal: false,
+        }
+      ],
+      on_finish: function (data) {
+        // Add the household response to the global data object as a new column
+        jsPsych.data.addProperties({
+          adults: data.response.adults,
+          children: data.response.children,
+        });
+      },
+    };
+timeline.push(household);
 
 var educational_attainment = {
       type: jsPsychSurveyMultiChoice,
       questions: [
         {
-          prompt: "¿Cuál es el nivel educativo más alto que ha completado?",
+          prompt: "¿Cuál es el nivel educativo más alto que has completado?",
           name: "education",
           options: [
             "Sin estudios formales",
@@ -698,86 +845,13 @@ var educational_attainment = {
         });
       },
     };
-//timeline.push(educational_attainment);
-
-var native = {
-      type: jsPsychSurveyMultiChoice,
-      questions: [
-        {
-          prompt: "¿Ha nacido en España?",
-          name: "native",
-          options: [
-            "Sí",
-            "No",
-          ],
-          required: true,
-        },
-      ],
-      on_finish: function (data) {
-        // Add the gender response to the global data object as a new column
-        jsPsych.data.addProperties({
-          native: data.response.native,
-        });
-      },
-    };
-//timeline.push(native);
-
-    // Conditional display: only show if participant answered "No" to native
-var yearsInSpain = {
-      type: jsPsychSurveyText,
-      questions: [
-        {
-          prompt: "¿Cuántos años ha vivido en España?",
-          name: "yearsInSpain",
-          required: true,
-          input_html: '<input type="number" id="yearsInSpain-input" required>',
-        },
-      ],
-      on_load: function () {
-        const input = document.querySelector('input[type="text"]');
-        if (input) {
-          input.addEventListener('paste', (e) => e.preventDefault());
-          input.addEventListener('copy', (e) => e.preventDefault());
-          input.addEventListener('cut', (e) => e.preventDefault());
-        }
-      },
-      on_finish: function (data) {
-        var yearsInSpainInput = parseInt(
-          jsPsych.data.get().last(1).values()[0].response.yearsInSpain,
-        );
-        if (isNaN(yearsInSpainInput) || yearsInSpainInput < 0 || yearsInSpainInput > 99) {
-          jsPsych.data.get().last(1).values()[0].valid = false;
-        } else {
-          jsPsych.data.get().last(1).values()[0].valid = true;
-        }
-      },
-    };
-
-    // Loop to keep asking for valid input
-var yearsInSpain_loop = {
-      timeline: [yearsInSpain],
-      loop_function: function (data) {
-        var valid = jsPsych.data.get().last(1).values()[0].valid;
-        if (!valid) {
-          alert("Por favor, escriba un número válido.");
-          return true;
-        } else {
-          return false;
-        }
-      },
-      conditional_function: function () {
-        // Only show if participant answered "No" to native
-        var nativeResp = jsPsych.data.get().filter({ trial_type: 'survey-multi-choice' }).values().find(d => d.response && d.response.native !== undefined);
-        return nativeResp && nativeResp.response.native === "No";
-      }
-    };
-//timeline.push(yearsInSpain_loop);
+timeline.push(educational_attainment);
 
 var ses = {
       type: jsPsychSurveyMultiChoice,
       questions: [
         {
-          prompt: "¿Cuál es su ocupación principal actualmente?",
+          prompt: "¿Cuál es tu ocupación principal actualmente?",
           name: "occupation",
           options: [
             "Trabajo a tiempo completo",
@@ -795,7 +869,7 @@ var ses = {
           },
         },
         {
-          prompt: "Contando las personas que viven con usted, ¿cuántos ingresos mensuales netos tiene su hogar?",
+          prompt: "Contando las personas que viven contigo, ¿cuántos ingresos mensuales netos tiene tu hogar?",
           name: "income",
           options: [
             "1000€ o menos",
@@ -809,46 +883,33 @@ var ses = {
           ],
           required: true,
         },
-        {
-          prompt: "Contándose a usted mismo/a, ¿cuántas personas viven en su hogar?",
-          name: "household",
-          options: [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5 o más",
-          ],
-          required: true,
-        }
       ],
       on_finish: function (data) {
         // Add the responses to the global data object as a new column
         jsPsych.data.addProperties({
           income: data.response.income,
           occupation: data.response.occupation,
-          household: data.response.household,
         });
       },
     };
-//timeline.push(ses);
+timeline.push(ses);
 
 var lrScale = {
       type: jsPsychHtmlSliderResponse,
       stimulus: `<div style="width:500px; text-align:center; margin: 0 auto;">
         <p>A menudo la gente habla de "izquierda" y "derecha" para hablar de su orientación política</p>
-        <p>Utilice el siguiente deslizador para indicar dónde se sitúa usted en este espectro político.</p>
+        <p>Utiliza el siguiente deslizador para indicar dónde te sitúas en este espectro político.</p>
         </div>`,
       require_movement: true,
       labels: ['Extrema izquierda', 'Izquierda', 'Centro', 'Derecha', 'Extrema derecha'],
     };
-//timeline.push(lrScale);
+timeline.push(lrScale);
 
 const remarks = {
       type: jsPsychSurveyText,
       questions: [
         {
-          prompt: "¿Tiene algún comentario adicional sobre este estudio? (opcional)",
+          prompt: "¿Tienes algún comentario adicional sobre este estudio? (opcional)",
           name: "remarks", // Unique name for the remarks field
         },
       ],
@@ -858,13 +919,14 @@ const remarks = {
         });
       },
     };
-//timeline.push(remarks);
+timeline.push(remarks);
 
 var final_trial = {
       type: jsPsychHtmlButtonResponse,
       stimulus: `
         <h1>¡Gracias por participar en este experimento!</h1>
-        El propósito de este estudio es examinar cómo evaluamos el desacuerdo de otras personas sobre cuestiones sociales y morales. Si tiene más preguntas, no dude en contactarnos por correo a info@mscilab.com.`,
+        El propósito de este estudio es examinar la importancia de las zonas verdes en la población. 
+        Si tienes más preguntas, no dude en contactarnos por correo a jorgesuarez@ugr.es`,
       choices: [
         `<b><p style="font-size:24px;">Finalizar</p></b>`,
       ],
@@ -872,7 +934,6 @@ var final_trial = {
 timeline.push(final_trial);
 
 jsPsych.run(timeline);
-
     </script>
 </body>
 </html>
