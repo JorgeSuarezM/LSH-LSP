@@ -32,7 +32,7 @@
       override_safe_mode: true,
       on_finish: function () {
         jsPsych.data.displayData('csv');
-        //window.location = "https://transit.nicequest.com/transit/participation?tp=co_0&c=ok&ticket=${e://Field/ticket}" // indicar el redirect URL
+        //window.location = "https://transit.nicequest.com/transit/participation?tp=co_0&c=ok&ticket=" + encodeURIComponent(ticket);
       },
     });
 
@@ -566,7 +566,7 @@ var loop_trial = {
           <td style="padding:10px; border:1px solid #eee; text-align:center; vertical-align:middle;">${right_pruning}</td>
         </tr>
         <tr>
-          <td style="padding:20px; border:1px solid #eee;"><strong>Distancia a pie a la zona verde más próxima</strong></td>
+          <td style="padding:20px; border:1px solid #eee;"><strong>Distancia a pie a la zona verde más próxima</strong><br><em>(el punto rojo en el plano superior representa la ubicación de la vivienda)</em></td>
           <td style="padding:10px; border:1px solid #eee; text-align:center; vertical-align:middle;">${left_time}</td>
           <td style="padding:10px; border:1px solid #eee; text-align:center; vertical-align:middle;">${right_time}</td>
         </tr>
